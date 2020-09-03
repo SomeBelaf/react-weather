@@ -71,9 +71,6 @@ function Header(props) {
           <Grid container className={classes.form} spacing={2}>
             <Grid item>
               <TextField
-                onChange={(e) =>
-                  props.setUserCityAndCountry(e.target.value, null, e.target.id)
-                }
                 label="City"
                 id="city"
                 defaultValue=""
@@ -84,9 +81,6 @@ function Header(props) {
             </Grid>
             <Grid item>
               <TextField
-                onChange={(e) =>
-                  props.setUserCityAndCountry(null, e.target.value, e.target.id)
-                }
                 label="Country"
                 id="country"
                 defaultValue=""
@@ -131,7 +125,6 @@ function Header(props) {
 
 Header.propTypes = {
   weatherRequest: PropTypes.func.isRequired,
-  setUserCityAndCountry: PropTypes.func.isRequired,
   fetchError: PropTypes.string.isRequired,
   geoError: PropTypes.string.isRequired,
   isLoading: PropTypes.bool.isRequired,

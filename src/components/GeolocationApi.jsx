@@ -23,6 +23,6 @@ function GeolocationApi() {
 
 
 
-  return { geoError, setUserCityAndCountry };
+  return { geoError };
 }
 export default GeolocationApi;

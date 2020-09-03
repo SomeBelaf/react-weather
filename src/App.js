@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const classes = useStyles();
 
-  const { setUserCityAndCountry, geoError } = GeolocationApi();
+  const { geoError } = GeolocationApi();
   const {
     fetchError,
     isLoading,
@@ -32,7 +32,6 @@ function App() {
     <Container maxWidth="xl" disableGutters className={classes.root}>
       <Header
         weatherRequest={getDataFromLocStorage}
-        setUserCityAndCountry={setUserCityAndCountry}
         fetchError={fetchError}
         geoError={geoError}
         isLoading={isLoading}
