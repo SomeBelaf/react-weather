@@ -27,12 +27,7 @@ function App() {
     weatherData,
     getDataFromLocStorage
   } = WeatherApi();
-
-  console.log("render");
-  // console.log("Loading: " + isLoading);
-  // console.log("fetchError: " + fetchError);
-  // console.log("geoError: " + geoError);
-  // console.log(weatherData);
+  
   return (
     <Container maxWidth="xl" disableGutters className={classes.root}>
       <Header
