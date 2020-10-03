@@ -4,14 +4,31 @@ const theme = createMuiTheme({
   palette: {
     type: "dark",
     primary: {
-      main: "#dcdfe3"
+      light: "#f2f3f4",
+      main: "#dcdfe3",
+      dark: "#c6cbd2"
     },
     info: {
+      light: "#d6d6d6",
       main: "#c2c2c2",
+      dark: "#aeaeae"
     },
-    background:{
-      paper: '#242424'
+    error: {
+      light: "#eb143f",
+      main: "#ff0033",
+      dark: "#d8002b"
     },
+    success: {
+      light: "#41af66",
+      main: "#379356",
+      dark: "#2c7645"
+    },
+    warning: {
+      main: "#ffb03b"
+    },
+    background: {
+      paper: "#242424"
+    }
   },
   // убрать скролл по горизонтали
   overrides: {
@@ -25,6 +42,25 @@ const theme = createMuiTheme({
             background: "transparent"
           }
         }
+      }
+    },
+    MuiOutlinedInput: {
+      root: {
+        background: "#242424",
+        borderRadius: "4px",
+        position: 'relative'
+      },
+      input: {
+        "&:-webkit-autofill": {
+          WebkitBoxShadow: "0 0 0 1000px #242424 inset",
+        }
+      }
+    },
+    MuiFormHelperText: {
+      root: {
+        fontSize: '14px',
+        position: 'absolute',
+        top:'35px'
       }
     }
   }

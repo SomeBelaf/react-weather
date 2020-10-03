@@ -1,15 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Card from "../Card/Card";
-import { DescrContext } from "../Context";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 
 //СТИЛИ
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   cardList: {
     position: "absolute",
-    top: "50%",
+    top: "60%",
     overflowX: "auto",
     background: "transparent",
     flexDirection: "column",
@@ -30,26 +29,27 @@ const useStyles = makeStyles(theme => ({
       background: "#555"
     },
     [theme.breakpoints.up("sm")]: {
+      top: "53%",
       flexDirection: "row",
       transform: "translateY(-50%)"
     }
   }
 }));
 
-function CardsList({ data }) {
+function CardsList(props) {
   const classes = useStyles();
 
-  const { handleCardDescr } = useContext(DescrContext);
+  const {data, setCardDescription} = props;
   let cards = null;
   if (data) {
     cards = data.weatherData.map((item, index) => {
       return (
         <Card
           key={index}
-          handleCardDescr={() => handleCardDescr(item.curentWeather)}
+          handleCardDescr={() => setCardDescription(item.curentWeather)}
           tempDay={item.tempDay}
           tempNight={item.tempNight}
-          humidit={item.humidity}
+          humidity={item.humidity}
           windSpeed={item.windSpeed}
           cloud={item.cloud}
           weatherDesc={item.curentWeather}
@@ -75,7 +75,8 @@ function CardsList({ data }) {
 }
 
 CardsList.propTypes = {
-  data: PropTypes.object
+  data: PropTypes.object,
+  setCardDescription: PropTypes.func
 };
 
 export default CardsList;

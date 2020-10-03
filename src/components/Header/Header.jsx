@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { useDebounce } from "./useDebounce";
 import LoadingDots from "../LoadingDots";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -10,6 +11,7 @@ import FilterDramaTwoToneIcon from "@material-ui/icons/FilterDramaTwoTone";
 import { makeStyles } from "@material-ui/core/styles";
 
 //СТИЛИ
+
 const useStyles = makeStyles((theme) => ({
   header: {
     flexDirection: "column",
@@ -40,14 +42,45 @@ const useStyles = makeStyles((theme) => ({
   fetchError: {
     color: theme.palette.error.light,
   },
+  successButton: {
+    color: theme.palette.success.main,
+  },
 }));
 
 function Header(props) {
+  const {
+    weatherRequest,
+    isLoading,
+    userLat,
+    userLon,
+    requestError,
+    coordinatesErr,
+    userCity,
+    userCountry,
+    errCity,
+    errCountry,
+    useUserCootdinatesRequest,
+  } = props;
+
   const classes = useStyles();
+
+  const makeRequest = useUserCootdinatesRequest();
+
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
+
+  const debounceCity = useDebounce(city, 2000);
+  const debounceCountry = useDebounce(country, 2000);
+
+  useEffect(() => {
+    if (debounceCity && debounceCountry)
+      makeRequest(debounceCity, debounceCountry);
+  }, [debounceCity, debounceCountry, makeRequest]);
+
   // запрос на сервер
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.weatherRequest();
+    weatherRequest(userLat, userLon);
   };
 
   return (
@@ -68,35 +101,49 @@ function Header(props) {
 
       <Grid item>
         <form onSubmit={handleSubmit}>
-          <Grid container className={classes.form} spacing={2}>
+          <Grid container alignItems="center" className={classes.form} spacing={3}>
             <Grid item>
               <TextField
-                label="City"
+                onChange={(e) => {
+                  setCity(e.target.value);
+                }}
+                error={errCity ? true : false}
+                label={errCity}
                 id="city"
                 defaultValue=""
                 size="small"
                 variant="outlined"
-                disabled
+                placeholder={"City"}
+                helperText={userCity || ''}
               />
             </Grid>
             <Grid item>
               <TextField
-                label="Country"
+                onChange={(e) => {
+                  setCountry(e.target.value);
+                }}
+                error={errCountry ? true : false}
+                label={errCountry}
                 id="country"
                 defaultValue=""
                 size="small"
                 variant="outlined"
-                disabled
+                placeholder={"Country"}
+                helperText={userCountry || ''}
               />
             </Grid>
             <Grid item>
-              <Button variant="contained" type="submit">
+              <Button
+                variant="contained"
+                type="submit"
+                className={userLat && userLon ? classes.successButton : ""}
+              >
                 Get weather
               </Button>
             </Grid>
           </Grid>
           <Box className={classes.loadingErrorWrapper}>
-            {props.isLoading ? (
+            {isLoading ? (
               <Grid container alignItems="baseline" spacing={1}>
                 <Grid item>
                   <Typography align="left">Loading</Typography>
@@ -106,13 +153,13 @@ function Header(props) {
                 </Grid>
               </Grid>
             ) : null}
-            {props.geoError !== "" || props.fetchError !== "" ? (
+            {coordinatesErr || requestError ? (
               <>
-                <Typography className={classes.geoError}>
-                  {props.geoError}
+                <Typography className={classes.geoError} variant="subtitle2">
+                  {coordinatesErr}
                 </Typography>
-                <Typography className={classes.fetchError}>
-                  {props.fetchError}
+                <Typography className={classes.fetchError} variant="subtitle2">
+                  {requestError}
                 </Typography>
               </>
             ) : null}
@@ -125,9 +172,15 @@ function Header(props) {
 
 Header.propTypes = {
   weatherRequest: PropTypes.func.isRequired,
-  fetchError: PropTypes.string.isRequired,
-  geoError: PropTypes.string.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  userLat: PropTypes.string.isRequired,
+  userLon: PropTypes.string.isRequired,
+  requestError: PropTypes.string.isRequired,
+  coordinatesErr: PropTypes.string.isRequired,
+  userCity: PropTypes.string.isRequired,
+  userCountry: PropTypes.string.isRequired,
+  errCity: PropTypes.string.isRequired,
+  errCountry: PropTypes.string.isRequired,
 };
 
 export default Header;

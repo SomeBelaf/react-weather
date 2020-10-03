@@ -8,7 +8,7 @@ import Brightness2TwoToneIcon from "@material-ui/icons/Brightness2TwoTone";
 import Brightness5TwoToneIcon from "@material-ui/icons/Brightness5TwoTone";
 import { makeStyles } from "@material-ui/core/styles";
 //СТИЛИ
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: "350px",
     padding: theme.spacing(2)
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 function WetherCard({
   tempDay,
   tempNight,
-  humidit,
+  humidity,
   windSpeed,
   cloud,
   weatherDesc,
@@ -57,7 +57,7 @@ function WetherCard({
             </Grid>
             <Grid container item justify="space-around">
               <Grid item>
-                <Typography variant="subtitle1">Humidit {humidit}%</Typography>
+                <Typography variant="subtitle1">humidity {humidity}%</Typography>
               </Grid>
               <Grid item>
                 <Typography variant="subtitle1">
@@ -75,7 +75,7 @@ function WetherCard({
 Card.propTypes = {
   tempDay: PropTypes.number,
   tempNight: PropTypes.number,
-  humidit: PropTypes.number,
+  humidity: PropTypes.number,
   windSpeed: PropTypes.number,
   cloud: PropTypes.number,
   weatherDesc: PropTypes.string,

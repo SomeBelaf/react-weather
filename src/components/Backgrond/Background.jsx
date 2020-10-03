@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { DescrContext } from "./Context";
+import React from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 //СТИЛИ
 const useStyles = makeStyles((theme) => ({
@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     top: "-50%",
     left: "-50%",
     width: "200%",
-    height: "200%",
+    height: "200%"
   },
   bgImage: {
     position: "absolute",
@@ -19,14 +19,14 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     margin: "auto",
     minWidth: "50%",
-    minHeight: "50%",
-  },
+    minHeight: "50%"
+  }
 }));
 
-export default function HandleWeatherDescr(props) {
+export default function Background (props) {
   const classes = useStyles();
-
-  const { cardDescr } = useContext(DescrContext);
+  
+  const {cardDescription} = props;
 
   // Массив с описаниями погоды
   const WeatherCondition = [
@@ -44,7 +44,7 @@ export default function HandleWeatherDescr(props) {
     "Squall",
     "Tornado",
     "Clear",
-    "Clouds",
+    "Clouds"
   ];
   /**
    * НИ В КОЕМ СЛУЧАЕ НЕ МЕНЯТЬ ПОСЛЕДОВАТЕЛЬНОСТЬ В МАССИВЕ
@@ -64,15 +64,24 @@ export default function HandleWeatherDescr(props) {
     "https://i.ibb.co/BKpRgMd/squall.jpg", // squall
     "https://i.ibb.co/PtmKL0T/tornado.jpg", //tornado
     "https://i.ibb.co/1qgB3Vt/clear.jpg", //clear
-    "https://i.ibb.co/pzFpgTv/clouds.jpg", //cloud
+    "https://i.ibb.co/pzFpgTv/clouds.jpg" //cloud
   ];
   return (
     <div className={classes.wrapper}>
       <img
         className={classes.bgImage}
-        alt=''
-        src={arrOfImage[WeatherCondition.indexOf(cardDescr)] || 'https://i.ibb.co/BKpRgMd/squall.jpg'}
+        alt={cardDescription}
+        src={
+          arrOfImage[WeatherCondition.indexOf(cardDescription)] ||
+          "https://i.ibb.co/BKpRgMd/squall.jpg"
+        }
       />
     </div>
   );
-}
+};
+
+
+
+Background.propTypes = {
+  cardDescription: PropTypes.string,
+};

@@ -1,8 +1,12 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setRequestError } from "../store/userCityAndCountry/actions";
 
-function WeatherApi() {
+const API_KEY = "116d6fc2fb80fd747f9da1487879c958";
+
+export const useWeatherApi = () => {
+  const dispatch = useDispatch();
   const [weatherData, getWeatherData] = useState(null);
-  const [fetchError, handleFetchError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   /*
    * функция определяющая какой день у пользователя,
@@ -51,7 +55,7 @@ function WeatherApi() {
       return (convertedData[index].day = item);
     });
 
-    getWeatherData({ weatherData: convertedData });
+    return getWeatherData({ weatherData: convertedData });
   };
   /*
    * функция делающая запрос на сервер
@@ -60,40 +64,19 @@ function WeatherApi() {
     setIsLoading(true);
     try {
       const response = await fetch(
-        ` https:///api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=current,minutely,hourly&appid=116d6fc2fb80fd747f9da1487879c958`
+        ` https:///api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=current,minutely,hourly&appid=${API_KEY}`
       );
       const data = await response.json();
-
       convertData(data.daily, getDays(8));
     } catch (error) {
-      handleFetchError(error.message);
+      dispatch(setRequestError("Something went wrong, reload page.")); //error.message
     }
     setIsLoading(false);
   };
-  /*
-   * получение геолокации с localStorage,
-   * и отправка запроса с данными пользователя
-   */
-  const getDataFromLocStorage = () => {
-    if (localStorage.getItem("userLocation") !== null) {
-      const gettingUserLocation = JSON.parse(
-        localStorage.getItem("userLocation")
-      );
-      weatherRequest(
-        window.atob(gettingUserLocation.lat),
-        window.atob(gettingUserLocation.lon)
-      );
-    } else {
-      handleFetchError("Something went wrong, reload page.");
-    }
-  };
 
   return {
-    getDataFromLocStorage,
-    fetchError,
+    weatherRequest,
     isLoading,
     weatherData,
   };
-}
-
-export default WeatherApi;
+};
