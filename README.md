@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Work in progress!
+
 ## Live Demo - https://someimya.github.io/react-weather/
 
 ## Available Scripts
