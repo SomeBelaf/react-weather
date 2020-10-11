@@ -8,6 +8,8 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import FilterDramaTwoToneIcon from "@material-ui/icons/FilterDramaTwoTone";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { makeStyles } from "@material-ui/core/styles";
 
 //СТИЛИ
@@ -19,32 +21,52 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       flexDirection: "row",
       alignItems: "flex-start",
-      paddingTop: theme.spacing(2),
-      paddingLeft: theme.spacing(2),
-    },
+      paddingTop: theme.spacing(1),
+      paddingLeft: theme.spacing(1)
+    }
   },
   logoWrapper: {
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   },
   form: {
     flexDirection: "column",
     [theme.breakpoints.up("sm")]: {
       alignItems: "center",
-      flexDirection: "row",
-    },
+      flexDirection: "row"
+    }
   },
   loadingErrorWrapper: {
-    marginTop: theme.spacing(2),
+    marginRight: theme.spacing(1),
+    marginLeft: theme.spacing(1)
   },
   geoError: {
-    color: theme.palette.warning.light,
+    color: theme.palette.warning.light
   },
   fetchError: {
-    color: theme.palette.error.light,
+    color: theme.palette.error.light
   },
   successButton: {
-    color: theme.palette.success.main,
+    color: theme.palette.success.main
   },
+  inputWrapper: {
+    padding: theme.spacing(1)
+  },
+  checkBoxWrapper: {
+    padding: theme.spacing(1),
+    order: 3,
+    [theme.breakpoints.up("sm")]: {
+      order: "unset",
+      paddingTop: 0,
+      paddingBottom: 0
+    }
+  },
+  submitBtnWrapper: {
+    order: 4,
+    padding: theme.spacing(1),
+    [theme.breakpoints.up("sm")]: {
+      order: "unset"
+    }
+  }
 }));
 
 function Header(props) {
@@ -59,7 +81,7 @@ function Header(props) {
     userCountry,
     errCity,
     errCountry,
-    useUserCootdinatesRequest,
+    useUserCootdinatesRequest
   } = props;
 
   const classes = useStyles();
@@ -68,6 +90,22 @@ function Header(props) {
 
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
+
+  const [period, setPeriod] = useState("current,minutely,hourly");
+  const [daily, setDaily] = useState(true);
+  const [hourly, setHourly] = useState(false);
+
+  const handlePeriodChange = (event) => {
+    if (event.target.name === "checkboxDaily") {
+      setDaily(true);
+      setHourly(false);
+      setPeriod("current,minutely,hourly");
+    } else {
+      setHourly(true);
+      setDaily(false);
+      setPeriod("current,minutely,daily");
+    }
+  };
 
   const debounceCity = useDebounce(city, 2000);
   const debounceCountry = useDebounce(country, 2000);
@@ -80,7 +118,7 @@ function Header(props) {
   // запрос на сервер
   const handleSubmit = (e) => {
     e.preventDefault();
-    weatherRequest(userLat, userLon);
+    weatherRequest(userLat, userLon, period);
   };
 
   return (
@@ -101,8 +139,8 @@ function Header(props) {
 
       <Grid item>
         <form onSubmit={handleSubmit}>
-          <Grid container alignItems="center" className={classes.form} spacing={3}>
-            <Grid item>
+          <Grid container alignItems="center" className={classes.form}>
+            <Grid item className={classes.inputWrapper}>
               <TextField
                 onChange={(e) => {
                   setCity(e.target.value);
@@ -114,10 +152,10 @@ function Header(props) {
                 size="small"
                 variant="outlined"
                 placeholder={"City"}
-                helperText={userCity || ''}
+                helperText={userCity || ""}
               />
             </Grid>
-            <Grid item>
+            <Grid item className={classes.inputWrapper}>
               <TextField
                 onChange={(e) => {
                   setCountry(e.target.value);
@@ -129,10 +167,10 @@ function Header(props) {
                 size="small"
                 variant="outlined"
                 placeholder={"Country"}
-                helperText={userCountry || ''}
+                helperText={userCountry || ""}
               />
             </Grid>
-            <Grid item>
+            <Grid item className={classes.submitBtnWrapper}>
               <Button
                 variant="contained"
                 type="submit"
@@ -141,7 +179,36 @@ function Header(props) {
                 Get weather
               </Button>
             </Grid>
+            <Grid container item className={classes.checkBoxWrapper}>
+              <Grid item>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={daily}
+                      onChange={handlePeriodChange}
+                      name="checkboxDaily"
+                      color="primary"
+                    />
+                  }
+                  label="Daily"
+                />
+              </Grid>
+              <Grid item>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={hourly}
+                      onChange={handlePeriodChange}
+                      name="checkboxHourly"
+                      color="primary"
+                    />
+                  }
+                  label="Hourly"
+                />
+              </Grid>
+            </Grid>
           </Grid>
+
           <Box className={classes.loadingErrorWrapper}>
             {isLoading ? (
               <Grid container alignItems="baseline" spacing={1}>
@@ -180,7 +247,7 @@ Header.propTypes = {
   userCity: PropTypes.string.isRequired,
   userCountry: PropTypes.string.isRequired,
   errCity: PropTypes.string.isRequired,
-  errCountry: PropTypes.string.isRequired,
+  errCountry: PropTypes.string.isRequired
 };
 
 export default Header;

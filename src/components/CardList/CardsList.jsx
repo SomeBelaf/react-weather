@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   cardList: {
     position: "absolute",
-    top: "60%",
+    top: "65%",
     overflowX: "auto",
     background: "transparent",
     flexDirection: "column",
@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
       background: "#555"
     },
     [theme.breakpoints.up("sm")]: {
-      top: "53%",
       flexDirection: "row",
       transform: "translateY(-50%)"
     }
@@ -39,19 +38,21 @@ const useStyles = makeStyles((theme) => ({
 function CardsList(props) {
   const classes = useStyles();
 
-  const {data, setCardDescription} = props;
+  const { data, setCardDescription } = props;
+
   let cards = null;
   if (data) {
     cards = data.weatherData.map((item, index) => {
       return (
         <Card
           key={index}
+          type={item.type}
+          hours={item.hours}
           handleCardDescr={() => setCardDescription(item.curentWeather)}
           tempDay={item.tempDay}
           tempNight={item.tempNight}
           humidity={item.humidity}
           windSpeed={item.windSpeed}
-          cloud={item.cloud}
           weatherDesc={item.curentWeather}
           day={item.day}
           icon={item.icon}

@@ -8,7 +8,6 @@ function HeaderContainer(props) {
     <Header
       {...props}
       coordinatesErr={props.coordinatesErr}
-
       userCity={props.userCity}
       userCountry={props.userCountry}
       errCity={props.errCity}
@@ -20,14 +19,14 @@ function HeaderContainer(props) {
 
 const mapStateToProps = (state) => {
   return {
-    userLon: state.userCoordinates.lon, 
-    userLat: state.userCoordinates.lat, 
+    userLon: state.userCoordinates.lon,
+    userLat: state.userCoordinates.lat,
     coordinatesErr: state.userCoordinates.coordinatesErr, //вывести Turn on Geolocation на страницу
     userCity: state.userCityAndCountry.userCity, //вывестив в инпут найденый город
     userCountry: state.userCityAndCountry.userCountry, //вывестив в инпут найденую страну
     errCity: state.userCityAndCountry.errCity, //вывести ошибки  с сервера
     errCountry: state.userCityAndCountry.errCountry, //вывести ошибки  с сервера
-    requestError: state.userCityAndCountry.requestError //вывести ошибки  с сервера
+    requestError: state.apiRequestReducer.requestError //вывести ошибки  с сервера
   };
 };
 const mapDispatchToProps = {};

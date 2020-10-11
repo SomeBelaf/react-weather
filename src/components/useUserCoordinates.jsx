@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
 import {
-  setRequestError,
   setUserCityError,
   setUserCountryError,
   setUserCity,
   setUserCountry,
 } from "../store/userCityAndCountry/actions";
+import { setRequestError } from "../store/apiRequest/actions";
 import {
   setUserCoordinatesError,
   setUserLat,
@@ -51,8 +51,8 @@ export const useUserCootdinatesRequest = () => {
         dispatch(setUserLat(data.data[0].lat));
         dispatch(setUserLon(data.data[0].lon));
 
-        dispatch(setUserCityError(''));
-        dispatch(setUserCountryError(''));
+        dispatch(setUserCityError(""));
+        dispatch(setUserCountryError(""));
       }
     } catch (error) {
       dispatch(setRequestError(error.message)); //error.message

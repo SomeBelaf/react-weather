@@ -2,14 +2,12 @@ import { CHANGE_USER_CITY } from "./actions";
 import { CHANGE_USER_COUNRTY } from "./actions";
 import { SET_USER_CITY_ERROR } from "./actions";
 import { SET_USER_COUNTRY_ERROR } from "./actions";
-import { SET_REQUEST_ERROR } from "./actions";
 
 const defaultState = {
   userCity: "", 
   userCountry: "", 
   errCity: "",
-  errCountry: "",
-  requestError: ""
+  errCountry: ""
 };
 
 export const userCityAndCountryReducer = (state = defaultState, action) => {
@@ -33,11 +31,6 @@ export const userCityAndCountryReducer = (state = defaultState, action) => {
       return {
         ...state,
         errCountry: action.payload
-      };
-    case SET_REQUEST_ERROR:
-      return {
-        ...state,
-        requestError: action.payload
       };
     default:
       return state;

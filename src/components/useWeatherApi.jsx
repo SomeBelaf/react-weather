@@ -1,8 +1,15 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setRequestError } from "../store/userCityAndCountry/actions";
+import { setRequestError } from "../store/apiRequest/actions";
 
 const API_KEY = "116d6fc2fb80fd747f9da1487879c958";
+
+/**
+ *
+ * daily  -  current,minutely,hourl
+ * hourly  - current,minutely,daily
+ *
+ */
 
 export const useWeatherApi = () => {
   const dispatch = useDispatch();
@@ -22,7 +29,7 @@ export const useWeatherApi = () => {
       "Wednesday",
       "Thursday",
       "Friday",
-      "Saturday",
+      "Saturday"
     ];
     for (let i = 0; i < daysToAdd; i++) {
       let currentDate = new Date();
@@ -35,39 +42,47 @@ export const useWeatherApi = () => {
   /*
    * перевод полученных данных в нужный формат
    */
-  const convertData = (data, arr) => {
-    const convertedData = data.map((item) => {
+  const convertData = (data, arrOfDays, period) => {
+    const convertedData = data.map((item, index) => {
       return {
+        type: period === "daily" ? "daily" : "hourly",
+        hours: `${new Date(item.dt * 1000).getHours()}:00`,
         curentWeather: item.weather[0].main,
-        tempDay: Math.round(item.feels_like.day),
-        tempNight: Math.round(item.feels_like.night),
-        windSpeed: Math.round(item.wind_speed * 3.6), // convert from m/s to km/h
-        clouds: item.clouds,
+        tempDay: Math.round(item.feels_like.day || item.feels_like), //первое значение подставляется  если передан data.daily, иначе с data.hourly
+        tempNight: Math.round(item.feels_like.night) || "", //первое значение подставляется  если передан data.daily, иначе с data.hourly
+        windSpeed: Math.round(item.wind_speed * 3.6), // перевести с  m/s в km/h
         humidity: item.humidity,
         rain: item.rain,
         snow: item.snow,
         icon: `http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`,
-        day: "",
+        day: arrOfDays[index]
       };
     });
-
-    arr.map((item, index) => {
-      return (convertedData[index].day = item);
+    if (arrOfDays.length === 2) {
+      convertedData.forEach((item, index) =>
+        index <= 23 ? (item.day = arrOfDays[0]) : (item.day = arrOfDays[1])
+      );
+    }
+    return getWeatherData({
+      weatherData: convertedData
     });
-
-    return getWeatherData({ weatherData: convertedData });
   };
   /*
    * функция делающая запрос на сервер
    */
-  const weatherRequest = async (lat, lon) => {
+  const weatherRequest = async (lat, lon, period) => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        ` https:///api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=current,minutely,hourly&appid=${API_KEY}`
+        ` https:///api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=${period}&appid=${API_KEY}`
       );
       const data = await response.json();
-      convertData(data.daily, getDays(8));
+      if (data.daily) {
+        convertData(data.daily, getDays(8), "daily");
+      } else if (data.hourly) {
+        convertData(data.hourly, getDays(2), "hourly");
+      }
+      dispatch(setRequestError(""));
     } catch (error) {
       dispatch(setRequestError("Something went wrong, reload page.")); //error.message
     }
@@ -77,6 +92,6 @@ export const useWeatherApi = () => {
   return {
     weatherRequest,
     isLoading,
-    weatherData,
+    weatherData
   };
 };

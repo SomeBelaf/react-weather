@@ -5,12 +5,12 @@ import CardList from "./CardsList";
 import { setCardDescription } from "../../store//background/actions";
 
 function CardListContainer(props) {
-  return <CardList {...props} setCardDescription = {props.setCardDescription} />;
+  return <CardList {...props} setCardDescription={props.setCardDescription} />;
 }
 
 const mapStateToProps = (state) => {
   return {
-    setCardDescription: state.backgroundReducer.setCardDescription,
+    setCardDescription: state.backgroundReducer.setCardDescription
   };
 };
 const mapDispatchToProps = { setCardDescription };
@@ -19,7 +19,4 @@ CardListContainer.propTypes = {
   data: PropTypes.object
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CardListContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(CardListContainer);
