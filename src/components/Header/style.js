@@ -12,31 +12,32 @@ export const style = makeStyles((theme) => ({
       flexDirection: "row",
       alignItems: "flex-start",
       paddingTop: theme.spacing(1),
-      paddingLeft: theme.spacing(1)
-    }
+      paddingLeft: theme.spacing(1),
+    },
   },
   logoWrapper: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
   form: {
     flexDirection: "column",
     [theme.breakpoints.up("sm")]: {
       alignItems: "center",
-      flexDirection: "row"
-    }
+      flexDirection: "row",
+    },
   },
   loadingErrorWrapper: {
     marginRight: theme.spacing(1),
-    marginLeft: theme.spacing(1)
+    marginLeft: theme.spacing(1),
   },
   geoError: {
-    color: theme.palette.warning.light
+    color: theme.palette.warning.light,
   },
   fetchError: {
-    color: theme.palette.error.light
+    color: theme.palette.error.light,
   },
   inputWrapper: {
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
+    paddingBottom: theme.spacing(2),
   },
   checkBoxWrapper: {
     padding: theme.spacing(1),
@@ -44,17 +45,17 @@ export const style = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       order: "unset",
       paddingTop: 0,
-      paddingBottom: 0
-    }
+      paddingBottom: 0,
+    },
   },
   submitBtnWrapper: {
     order: 4,
-    padding: theme.spacing(1),
+    padding: "8px 0 16px 0",
     [theme.breakpoints.up("sm")]: {
-      order: "unset"
-    }
+      order: "unset",
+    },
   },
   submitBtn: {
-    background: theme.palette.primary.dark
-  }
+    background: theme.palette.primary.dark,
+  },
 }));

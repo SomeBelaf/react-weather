@@ -24,7 +24,7 @@ function Header(props) {
     userCity,
     userCountry,
     errCity,
-    errCountry
+    errCountry,
   } = props;
 
   const classes = style();
@@ -84,7 +84,9 @@ function Header(props) {
         className={classes.logoWrapper}
       >
         <FilterDramaTwoToneIcon style={{ fontSize: "4.1875rem" }} />
-        <Typography variant="h4">LOGO</Typography>
+        <Typography variant="h4" align="center">
+          LOGO
+        </Typography>
       </Grid>
 
       <Grid item sm={10}>
@@ -120,8 +122,12 @@ function Header(props) {
                 helperText={userCountry || ""}
               />
             </Grid>
-            <Grid item className={classes.submitBtnWrapper}>
-              <Button variant="contained" type="submit" className={classes.submitBtn}>
+            <Grid item sm={4} md="auto" className={classes.submitBtnWrapper}>
+              <Button
+                variant="contained"
+                type="submit"
+                className={classes.submitBtn}
+              >
                 {buttonContent}
               </Button>
             </Grid>
@@ -189,7 +195,7 @@ Header.propTypes = {
   userCity: PropTypes.string.isRequired,
   userCountry: PropTypes.string.isRequired,
   errCity: PropTypes.string.isRequired,
-  errCountry: PropTypes.string.isRequired
+  errCountry: PropTypes.string.isRequired,
 };
 
 export default Header;

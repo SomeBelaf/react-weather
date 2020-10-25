@@ -6,37 +6,37 @@ const theme = createMuiTheme({
       sm: 576,
       md: 768,
       lg: 992,
-      xl: 1200
-    }
+      xl: 1200,
+    },
   },
   palette: {
     type: "dark",
     primary: {
       light: "#f2f3f4",
       main: "#dcdfe3",
-      dark: "#c6cbd2"
+      dark: "#c6cbd2",
     },
     info: {
       light: "#d6d6d6",
       main: "#c2c2c2",
-      dark: "#aeaeae"
+      dark: "#aeaeae",
     },
     error: {
       light: "#eb143f",
       main: "#ff0033",
-      dark: "#d8002b"
+      dark: "#d8002b",
     },
     success: {
       light: "#41af66",
       main: "#379356",
-      dark: "#2c7645"
+      dark: "#2c7645",
     },
     warning: {
-      main: "#ffb03b"
+      main: "#ffb03b",
     },
     background: {
-      paper: "#242424"
-    }
+      paper: "#242424",
+    },
   },
   // убрать скролл по горизонтали
   overrides: {
@@ -47,28 +47,32 @@ const theme = createMuiTheme({
           overflowX: "hidden",
           "& ::-webkit-scrollbar": {
             width: "0px",
-            background: "transparent"
-          }
-        }
-      }
+            background: "transparent",
+          },
+        },
+      },
     },
     MuiOutlinedInput: {
       root: {
         background: "#242424",
-        borderRadius: "4px"
+        borderRadius: "4px",
+        position: "relative",
       },
       input: {
         "&:-webkit-autofill": {
-          WebkitBoxShadow: "0 0 0 1000px #242424 inset"
-        }
-      }
+          WebkitBoxShadow: "0 0 0 1000px #242424 inset",
+        },
+      },
     },
     MuiFormHelperText: {
       root: {
-        fontSize: "14px"
-      }
-    }
-  }
+        position: "absolute",
+        top: "36px",
+        left: 0,
+        fontSize: "14px",
+      },
+    },
+  },
 });
 
 export default theme;
