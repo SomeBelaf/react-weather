@@ -63,7 +63,7 @@ function Header(props) {
     e.preventDefault();
     weatherRequest(userLat, userLon, period);
   };
-  const buttonContent = true ? (
+  const buttonContent = isLoading ? (
     <>
       <Typography>Loading</Typography> <LoadingDots />
     </>
