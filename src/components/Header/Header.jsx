@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { useUserCootdinatesRequest } from "../useUserCootdinatesRequest";
 import { useDebounce } from "./useDebounce";
-import LoadingDots from "../LoadingDots";
+import LoadingDots from "../LoadingDots/LoadingDots";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -10,64 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import FilterDramaTwoToneIcon from "@material-ui/icons/FilterDramaTwoTone";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { makeStyles } from "@material-ui/core/styles";
-
-//СТИЛИ
-
-const useStyles = makeStyles((theme) => ({
-  header: {
-    flexDirection: "column",
-    alignItems: "center",
-    [theme.breakpoints.up("sm")]: {
-      flexDirection: "row",
-      alignItems: "flex-start",
-      paddingTop: theme.spacing(1),
-      paddingLeft: theme.spacing(1)
-    }
-  },
-  logoWrapper: {
-    marginBottom: theme.spacing(2)
-  },
-  form: {
-    flexDirection: "column",
-    [theme.breakpoints.up("sm")]: {
-      alignItems: "center",
-      flexDirection: "row"
-    }
-  },
-  loadingErrorWrapper: {
-    marginRight: theme.spacing(1),
-    marginLeft: theme.spacing(1)
-  },
-  geoError: {
-    color: theme.palette.warning.light
-  },
-  fetchError: {
-    color: theme.palette.error.light
-  },
-  successButton: {
-    color: theme.palette.success.main
-  },
-  inputWrapper: {
-    padding: theme.spacing(1)
-  },
-  checkBoxWrapper: {
-    padding: theme.spacing(1),
-    order: 3,
-    [theme.breakpoints.up("sm")]: {
-      order: "unset",
-      paddingTop: 0,
-      paddingBottom: 0
-    }
-  },
-  submitBtnWrapper: {
-    order: 4,
-    padding: theme.spacing(1),
-    [theme.breakpoints.up("sm")]: {
-      order: "unset"
-    }
-  }
-}));
+import { style } from "./style";
 
 function Header(props) {
   const {
@@ -80,11 +24,10 @@ function Header(props) {
     userCity,
     userCountry,
     errCity,
-    errCountry,
-    useUserCootdinatesRequest
+    errCountry
   } = props;
 
-  const classes = useStyles();
+  const classes = style();
 
   const makeRequest = useUserCootdinatesRequest();
 
@@ -120,6 +63,13 @@ function Header(props) {
     e.preventDefault();
     weatherRequest(userLat, userLon, period);
   };
+  const buttonContent = true ? (
+    <>
+      <Typography>Loading</Typography> <LoadingDots />
+    </>
+  ) : (
+    <Typography>Get weather</Typography>
+  );
 
   return (
     <Grid container justify="flex-start" className={classes.header}>
@@ -128,7 +78,7 @@ function Header(props) {
         container
         xs={6}
         sm={2}
-        lg={1}
+        xl={1}
         direction="column"
         alignItems="center"
         className={classes.logoWrapper}
@@ -137,10 +87,10 @@ function Header(props) {
         <Typography variant="h4">LOGO</Typography>
       </Grid>
 
-      <Grid item>
+      <Grid item sm={10}>
         <form onSubmit={handleSubmit}>
           <Grid container alignItems="center" className={classes.form}>
-            <Grid item className={classes.inputWrapper}>
+            <Grid item sm={4} md="auto" className={classes.inputWrapper}>
               <TextField
                 onChange={(e) => {
                   setCity(e.target.value);
@@ -155,7 +105,7 @@ function Header(props) {
                 helperText={userCity || ""}
               />
             </Grid>
-            <Grid item className={classes.inputWrapper}>
+            <Grid item sm={4} md="auto" className={classes.inputWrapper}>
               <TextField
                 onChange={(e) => {
                   setCountry(e.target.value);
@@ -171,16 +121,18 @@ function Header(props) {
               />
             </Grid>
             <Grid item className={classes.submitBtnWrapper}>
-              <Button
-                variant="contained"
-                type="submit"
-                className={userLat && userLon ? classes.successButton : ""}
-              >
-                Get weather
+              <Button variant="contained" type="submit" className={classes.submitBtn}>
+                {buttonContent}
               </Button>
             </Grid>
-            <Grid container item className={classes.checkBoxWrapper}>
-              <Grid item>
+            <Grid
+              container
+              item
+              xs={12}
+              sm="auto"
+              className={classes.checkBoxWrapper}
+            >
+              <Grid item xs={6} sm="auto">
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -193,7 +145,7 @@ function Header(props) {
                   label="Daily"
                 />
               </Grid>
-              <Grid item>
+              <Grid item xs={6} sm="auto">
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -210,16 +162,6 @@ function Header(props) {
           </Grid>
 
           <Box className={classes.loadingErrorWrapper}>
-            {isLoading ? (
-              <Grid container alignItems="baseline" spacing={1}>
-                <Grid item>
-                  <Typography align="left">Loading</Typography>
-                </Grid>
-                <Grid item>
-                  <LoadingDots />
-                </Grid>
-              </Grid>
-            ) : null}
             {coordinatesErr || requestError ? (
               <>
                 <Typography className={classes.geoError} variant="subtitle2">

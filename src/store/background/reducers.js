@@ -1,18 +1,17 @@
-import { CHANGE_CARD_DESCRIPTION } from './actions';
+import { CHANGE_CARD_DESCRIPTION } from "./actions";
 
 const defaultState = {
-    cardDescription: ""
+  cardDescription: ""
 };
 
 export const backgroundReducer = (state = defaultState, action) => {
-    switch (action.type) {
-        case CHANGE_CARD_DESCRIPTION:
-            return {
-                ...state,
-                cardDescription: action.payload
-            };
-        default:
-            return state;
-    };
+  switch (action.type) {
+    case CHANGE_CARD_DESCRIPTION:
+      return {
+        ...state,
+        cardDescription: action.payload
+      };
+    default:
+      return state;
+  }
 };
-

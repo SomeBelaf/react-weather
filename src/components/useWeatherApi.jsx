@@ -4,13 +4,6 @@ import { setRequestError } from "../store/apiRequest/actions";
 
 const API_KEY = "116d6fc2fb80fd747f9da1487879c958";
 
-/**
- *
- * daily  -  current,minutely,hourl
- * hourly  - current,minutely,daily
- *
- */
-
 export const useWeatherApi = () => {
   const dispatch = useDispatch();
   const [weatherData, getWeatherData] = useState(null);

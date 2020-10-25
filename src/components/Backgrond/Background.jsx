@@ -1,32 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-//СТИЛИ
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    zIndex: -1,
-    position: " fixed",
-    top: "-50%",
-    left: "-50%",
-    width: "200%",
-    height: "200%"
-  },
-  bgImage: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    margin: "auto",
-    minWidth: "50%",
-    minHeight: "50%"
-  }
-}));
+import Box from "@material-ui/core/Box";
+import { style } from "./style";
 
-export default function Background (props) {
-  const classes = useStyles();
-  
-  const {cardDescription} = props;
+export default function Background(props) {
+  const classes = style();
+
+  const { cardDescription } = props;
 
   // Массив с описаниями погоды
   const WeatherCondition = [
@@ -67,7 +47,7 @@ export default function Background (props) {
     "https://i.ibb.co/pzFpgTv/clouds.jpg" //cloud
   ];
   return (
-    <div className={classes.wrapper}>
+    <Box className={classes.wrapper}>
       <img
         className={classes.bgImage}
         alt={cardDescription}
@@ -76,12 +56,10 @@ export default function Background (props) {
           "https://i.ibb.co/BKpRgMd/squall.jpg"
         }
       />
-    </div>
+    </Box>
   );
-};
-
-
+}
 
 Background.propTypes = {
-  cardDescription: PropTypes.string,
+  cardDescription: PropTypes.string
 };

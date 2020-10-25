@@ -1,6 +1,14 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 // изменённые стили
 const theme = createMuiTheme({
+  breakpoints: {
+    values: {
+      sm: 576,
+      md: 768,
+      lg: 992,
+      xl: 1200
+    }
+  },
   palette: {
     type: "dark",
     primary: {
@@ -47,20 +55,17 @@ const theme = createMuiTheme({
     MuiOutlinedInput: {
       root: {
         background: "#242424",
-        borderRadius: "4px",
-        position: 'relative'
+        borderRadius: "4px"
       },
       input: {
         "&:-webkit-autofill": {
-          WebkitBoxShadow: "0 0 0 1000px #242424 inset",
+          WebkitBoxShadow: "0 0 0 1000px #242424 inset"
         }
       }
     },
     MuiFormHelperText: {
       root: {
-        fontSize: '14px',
-        position: 'absolute',
-        top:'35px'
+        fontSize: "14px"
       }
     }
   }

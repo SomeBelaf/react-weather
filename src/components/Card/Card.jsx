@@ -6,25 +6,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Brightness2TwoToneIcon from "@material-ui/icons/Brightness2TwoTone";
 import Brightness5TwoToneIcon from "@material-ui/icons/Brightness5TwoTone";
-import { makeStyles } from "@material-ui/core/styles";
-//СТИЛИ
-const useStyles = makeStyles((theme) => ({
-  contaner: {
-    minWidth: "350px",
-    padding: theme.spacing(2)
-  },
-  flexOne: {
-    flex: 1
-  },
-  comtainer: {
-    dislpay: "flex",
-    flexDirection: "row",
-    alignItems: "center"
-  },
-  temp: {
-    marginBottom: theme.spacing(1)
-  }
-}));
+import { style } from "./style";
 
 function WetherCard(props) {
   const {
@@ -39,10 +21,10 @@ function WetherCard(props) {
     icon,
     handleCardDescr
   } = props;
-  const classes = useStyles();
+  const classes = style();
 
   return (
-    <Grid item className={classes.contaner} onMouseEnter={handleCardDescr}>
+    <Grid item className={classes.container} onMouseEnter={handleCardDescr}>
       <Card>
         <CardContent>
           <Grid container direction="column" alignItems="center" spacing={1}>

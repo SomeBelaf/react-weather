@@ -4,8 +4,8 @@ import { SET_USER_CITY_ERROR } from "./actions";
 import { SET_USER_COUNTRY_ERROR } from "./actions";
 
 const defaultState = {
-  userCity: "", 
-  userCountry: "", 
+  userCity: "",
+  userCountry: "",
   errCity: "",
   errCountry: ""
 };

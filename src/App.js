@@ -1,5 +1,5 @@
-import React ,{useEffect} from "react";
-import { useUserCoordinates, useUserCootdinatesRequest } from "./components/useUserCoordinates";
+import React, { useEffect } from "react";
+import { useUserCoordinates } from "./components/useUserCoordinates";
 import { useWeatherApi } from "./components/useWeatherApi";
 import HeaderCointainer from "./components/Header/HeaderContainer";
 import CadsListContainer from "./components/CardList/CardListContainer";
@@ -22,17 +22,13 @@ function App() {
   const userCoordinates = useUserCoordinates();
   const { isLoading, weatherData, weatherRequest } = useWeatherApi();
 
-  useEffect(()=>{
-    userCoordinates()
-  })
+  useEffect(() => {
+    userCoordinates();
+  }, [userCoordinates]);
   console.log("render");
   return (
-    <Container maxWidth="xl" disableGutters className={classes.root}>
-      <HeaderCointainer
-        useUserCootdinatesRequest={useUserCootdinatesRequest}
-        weatherRequest={weatherRequest}
-        isLoading={isLoading}
-      />
+    <Container maxWidth="xs" disableGutters className={classes.root}>
+      <HeaderCointainer weatherRequest={weatherRequest} isLoading={isLoading} />
       <CadsListContainer data={weatherData} />
       <BackgroundContainer />
     </Container>

@@ -9,6 +9,7 @@ const defaultState = {
 };
 
 export const userCoordinatesReducer = (state = defaultState, action) => {
+  // console.log(state);
   switch (action.type) {
     case CHANGE_USER_LAT:
       return {

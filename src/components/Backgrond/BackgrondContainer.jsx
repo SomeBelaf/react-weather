@@ -8,11 +8,10 @@ function BackgroundContainer(props) {
 
 const mapStateToProps = (state) => {
   return {
-    cardDescription: state.backgroundReducer.cardDescription,
+    cardDescription: state.backgroundReducer.cardDescription
   };
 };
 const mapDispatchToProps = {};
-
 
 export default connect(
   mapStateToProps,
