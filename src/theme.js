@@ -12,19 +12,19 @@ const theme = createMuiTheme({
   palette: {
     type: "dark",
     primary: {
-      light: "#f2f3f4",
-      main: "#dcdfe3",
-      dark: "#c6cbd2",
+      light: "#c0c0c0",
+      main: "#dedede",
+      dark: "#c0c0c0",
     },
     info: {
-      light: "#d6d6d6",
-      main: "#c2c2c2",
-      dark: "#aeaeae",
+      light: "#d1d1d1",
+      main: "#bdbdbd",
+      dark: "#a9a9a9",
     },
     error: {
-      light: "#eb143f",
-      main: "#ff0033",
-      dark: "#d8002b",
+      light: "#ff6f6f",
+      main: "#ff4848",
+      dark: "#ff2121",
     },
     success: {
       light: "#41af66",
@@ -32,11 +32,14 @@ const theme = createMuiTheme({
       dark: "#2c7645",
     },
     warning: {
-      main: "#ffb03b",
+      main: "#ff7315", //  ffb03b
     },
     background: {
-      paper: "#242424",
+      paper: "#52524e",
     },
+  },
+  typography: {
+    fontFamily: ["Nunito", "sans-serif"].join(","),
   },
   // убрать скролл по горизонтали
   overrides: {
@@ -50,11 +53,13 @@ const theme = createMuiTheme({
             background: "transparent",
           },
         },
+        body: {
+          backgroundColor: "#52524e",
+        },
       },
     },
     MuiOutlinedInput: {
       root: {
-        background: "#242424",
         borderRadius: "4px",
         position: "relative",
       },
@@ -63,6 +68,15 @@ const theme = createMuiTheme({
           WebkitBoxShadow: "0 0 0 1000px #242424 inset",
         },
       },
+      notchedOutline: {
+        borderWidth: "2px",
+        borderColor: "#d4d6c8",
+      },
+    },
+    MuiButtonBase: {
+      input: {
+        fontWeight: 600,
+      },
     },
     MuiFormHelperText: {
       root: {
@@ -70,6 +84,26 @@ const theme = createMuiTheme({
         top: "36px",
         left: 0,
         fontSize: "14px",
+        color: "#52524e",
+        fontWeight: "600",
+      },
+    },
+    MuiFormControlLabel: {
+      root: {
+        marginRight: "8px",
+      },
+    },
+    MuiPaper: {
+      rounded: {
+        borderRadius: 0,
+      },
+      elevation1: {
+        boxShadow: "none",
+      },
+    },
+    MuiCard: {
+      root: {
+        background: "transparent",
       },
     },
   },

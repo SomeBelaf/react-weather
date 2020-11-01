@@ -10,11 +10,9 @@ export const useWeatherApi = () => {
   const [isLoading, setIsLoading] = useState(false);
   /*
    * функция определяющая какой день у пользователя,
-   * возвращает массив с днями недели
+   * возвращает день недели
    */
-  const getDays = (daysToAdd) => {
-    let arrOfDays = [];
-    let startDate = new Date();
+  const getWeekDay = (numOfDays) => {
     let weekdays = [
       "Sunday",
       "Monday",
@@ -22,42 +20,39 @@ export const useWeatherApi = () => {
       "Wednesday",
       "Thursday",
       "Friday",
-      "Saturday"
+      "Saturday",
     ];
-    for (let i = 0; i < daysToAdd; i++) {
-      let currentDate = new Date();
-      currentDate.setDate(startDate.getDate() + i);
-      arrOfDays.push(weekdays[currentDate.getDay()]);
-    }
-
-    return arrOfDays;
+      //     "SUN",
+      // "MON",
+      // "TUE",
+      // "WED",
+      // "THU",
+      // "FRI",
+      // "SAT",
+    return weekdays[numOfDays];
   };
   /*
    * перевод полученных данных в нужный формат
    */
-  const convertData = (data, arrOfDays, period) => {
+  const convertData = (data, period) => {
     const convertedData = data.map((item, index) => {
+      const date = new Date(item.dt * 1000);
       return {
-        type: period === "daily" ? "daily" : "hourly",
-        hours: `${new Date(item.dt * 1000).getHours()}:00`,
-        curentWeather: item.weather[0].main,
+        type: period,
+        hours: `${date.getHours()}:00`,
+        weatherDesc: item.weather[0].main,
         tempDay: Math.round(item.feels_like.day || item.feels_like), //первое значение подставляется  если передан data.daily, иначе с data.hourly
-        tempNight: Math.round(item.feels_like.night) || "", //первое значение подставляется  если передан data.daily, иначе с data.hourly
+        tempNight: Math.round(item.feels_like.night || item.feels_like), //первое значение подставляется  если передан data.daily, иначе с data.hourly
         windSpeed: Math.round(item.wind_speed * 3.6), // перевести с  m/s в km/h
         humidity: item.humidity,
         rain: item.rain,
         snow: item.snow,
-        icon: `http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`,
-        day: arrOfDays[index]
+        icon: `http://openweathermap.org/img/wn/${item.weather[0].icon}@4x.png`,
+        day: getWeekDay(date.getDay()),
       };
     });
-    if (arrOfDays.length === 2) {
-      convertedData.forEach((item, index) =>
-        index <= 23 ? (item.day = arrOfDays[0]) : (item.day = arrOfDays[1])
-      );
-    }
     return getWeatherData({
-      weatherData: convertedData
+      weatherData: convertedData,
     });
   };
   /*
@@ -67,13 +62,13 @@ export const useWeatherApi = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        ` https:///api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=${period}&appid=${API_KEY}`
+        `https:///api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=${period}&appid=${API_KEY}`
       );
       const data = await response.json();
       if (data.daily) {
-        convertData(data.daily, getDays(8), "daily");
+        convertData(data.daily, "daily");
       } else if (data.hourly) {
-        convertData(data.hourly, getDays(2), "hourly");
+        convertData(data.hourly, "hourly");
       }
       dispatch(setRequestError(""));
     } catch (error) {
@@ -85,6 +80,6 @@ export const useWeatherApi = () => {
   return {
     weatherRequest,
     isLoading,
-    weatherData
+    weatherData,
   };
 };

@@ -5,7 +5,6 @@ import { useDebounce } from "./useDebounce";
 import LoadingDots from "../LoadingDots/LoadingDots";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import FilterDramaTwoToneIcon from "@material-ui/icons/FilterDramaTwoTone";
@@ -91,52 +90,66 @@ function Header(props) {
 
       <Grid item sm={10}>
         <form onSubmit={handleSubmit}>
-          <Grid container alignItems="center" className={classes.form}>
-            <Grid item sm={4} md="auto" className={classes.inputWrapper}>
-              <TextField
-                onChange={(e) => {
-                  setCity(e.target.value);
-                }}
-                error={errCity ? true : false}
-                label={errCity}
-                id="city"
-                defaultValue=""
-                size="small"
-                variant="outlined"
-                placeholder={"City"}
-                helperText={userCity || ""}
-              />
-            </Grid>
-            <Grid item sm={4} md="auto" className={classes.inputWrapper}>
-              <TextField
-                onChange={(e) => {
-                  setCountry(e.target.value);
-                }}
-                error={errCountry ? true : false}
-                label={errCountry}
-                id="country"
-                defaultValue=""
-                size="small"
-                variant="outlined"
-                placeholder={"Country"}
-                helperText={userCountry || ""}
-              />
-            </Grid>
-            <Grid item sm={4} md="auto" className={classes.submitBtnWrapper}>
-              <Button
-                variant="contained"
-                type="submit"
-                className={classes.submitBtn}
-              >
-                {buttonContent}
-              </Button>
+          <Grid
+            container
+            alignItems="center"
+            spacing={1}
+            className={classes.form}
+          >
+            <Grid
+              item
+              container
+              xs={12}
+              spacing={2}
+              alignItems="center"
+              className={classes.inputsContainer}
+            >
+              <Grid item sm={4} md="auto">
+                <TextField
+                  onChange={(e) => {
+                    setCity(e.target.value);
+                  }}
+                  error={errCity ? true : false}
+                  label={errCity}
+                  id="city"
+                  defaultValue=""
+                  size="small"
+                  variant="outlined"
+                  placeholder={"City"}
+                  helperText={userCity || ""}
+                />
+              </Grid>
+              <Grid item sm={4} md="auto">
+                <TextField
+                  onChange={(e) => {
+                    setCountry(e.target.value);
+                  }}
+                  error={errCountry ? true : false}
+                  label={errCountry}
+                  id="country"
+                  defaultValue=""
+                  size="small"
+                  variant="outlined"
+                  placeholder={"Country"}
+                  helperText={userCountry || ""}
+                />
+              </Grid>
+              <Grid item sm={4} md="auto">
+                <Button
+                  variant="contained"
+                  type="submit"
+                  className={classes.submitBtn}
+                >
+                  {buttonContent}
+                </Button>
+              </Grid>
             </Grid>
             <Grid
               container
               item
-              xs={12}
-              sm="auto"
-              className={classes.checkBoxWrapper}
+              xs={11}
+              md="auto"
+              className={classes.checkboxesWrapper}
             >
               <Grid item xs={6} sm="auto">
                 <FormControlLabel
@@ -148,7 +161,14 @@ function Header(props) {
                       color="primary"
                     />
                   }
-                  label="Daily"
+                  label={
+                    <Typography
+                      variant="subtitle2"
+                      className={classes.checkboxLabel}
+                    >
+                      7 Days
+                    </Typography>
+                  }
                 />
               </Grid>
               <Grid item xs={6} sm="auto">
@@ -161,24 +181,27 @@ function Header(props) {
                       color="primary"
                     />
                   }
-                  label="Hourly"
+                  label={
+                    <Typography
+                      variant="subtitle2"
+                      className={classes.checkboxLabel}
+                    >
+                      48 Hours
+                    </Typography>
+                  }
                 />
               </Grid>
             </Grid>
-          </Grid>
 
-          <Box className={classes.loadingErrorWrapper}>
-            {coordinatesErr || requestError ? (
-              <>
-                <Typography className={classes.geoError} variant="subtitle2">
-                  {coordinatesErr}
-                </Typography>
-                <Typography className={classes.fetchError} variant="subtitle2">
-                  {requestError}
-                </Typography>
-              </>
-            ) : null}
-          </Box>
+            <Grid item md={7} className={classes.errorsWrapper}>
+              {coordinatesErr || requestError ? (
+                <>
+                  <Typography variant="body1">{coordinatesErr}</Typography>
+                  <Typography variant="body1">{requestError}</Typography>
+                </>
+              ) : null}
+            </Grid>
+          </Grid>
         </form>
       </Grid>
     </Grid>

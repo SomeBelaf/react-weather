@@ -12,8 +12,8 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
-    height: "100vh"
-  }
+    height: "100vh",
+  },
 }));
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
   return (
     <Container maxWidth="xs" disableGutters className={classes.root}>
       <HeaderCointainer weatherRequest={weatherRequest} isLoading={isLoading} />
-      <CadsListContainer data={weatherData} />
+      {weatherData ? <CadsListContainer data={weatherData} /> : null}
       <BackgroundContainer />
     </Container>
   );

@@ -2,30 +2,38 @@ import { makeStyles } from "@material-ui/core/styles";
 //СТИЛИ
 export const style = makeStyles((theme) => ({
   cardList: {
+    background: "rgba(36, 36, 36, 0.7)",
     position: "absolute",
     top: "65%",
+    left: 0,
+    [theme.breakpoints.up("sm")]: {
+      top: "initial",
+      bottom: 0,
+    },
+  },
+  cardListTrack: {
     overflowX: "auto",
-    background: "transparent",
-    flexDirection: "column",
-
+    flexDirection: "row",
+    justifyContent: "space-evenly",
     "&::-webkit-scrollbar ": {
-      height: "10px"
+      height: "10px",
     },
     /* Track */
     "&::-webkit-scrollbar-track": {
-      background: "#f1f1f1"
+      background: "#f1f1f1",
     },
     /* Handle */
     "&::-webkit-scrollbar-thumb": {
-      background: "#888"
+      background: "#888",
     },
     /* Handle on hover */
     " &::-webkit-scrollbar-thumb:hover": {
-      background: "#555"
+      background: "#555",
     },
     [theme.breakpoints.up("sm")]: {
-      flexDirection: "row",
-      transform: "translateY(-50%)"
-    }
-  }
+      flexWrap: "nowrap",
+      justifyContent: "initial"
+
+    },
+  },
 }));

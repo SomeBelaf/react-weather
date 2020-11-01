@@ -3,17 +3,18 @@ import {
   setUserCityError,
   setUserCountryError,
   setUserCity,
-  setUserCountry
+  setUserCountry,
 } from "../store/userCityAndCountry/actions";
 import { setRequestError } from "../store/apiRequest/actions";
 import { setUserLat, setUserLon } from "../store/userCoordinates/actions";
 
 export const useUserCootdinatesRequest = () => {
+  const SERVER_URL = "http://localhost:8000";
   const dispatch = useDispatch();
   return async function (enteredCity, enteredCountry) {
     try {
       const response = await fetch(
-        `http://localhost:8000/?city=${enteredCity}&country=${enteredCountry}`
+        `${SERVER_URL}/?city=${enteredCity}&country=${enteredCountry}`
       );
       const data = await response.json();
       if (data.error || data.error) {

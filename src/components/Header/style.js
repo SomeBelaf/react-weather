@@ -6,7 +6,7 @@ export const style = makeStyles((theme) => ({
   header: {
     flexDirection: "column",
     alignItems: "center",
-    background: "rgba(36, 36, 36, 0.7)",
+    // background: "rgba(36, 36, 36, 0.7)",
     paddingBottom: theme.spacing(1),
     [theme.breakpoints.up("sm")]: {
       flexDirection: "row",
@@ -25,37 +25,33 @@ export const style = makeStyles((theme) => ({
       flexDirection: "row",
     },
   },
-  loadingErrorWrapper: {
-    marginRight: theme.spacing(1),
-    marginLeft: theme.spacing(1),
-  },
-  geoError: {
-    color: theme.palette.warning.light,
-  },
-  fetchError: {
-    color: theme.palette.error.light,
-  },
-  inputWrapper: {
-    padding: theme.spacing(1),
-    paddingBottom: theme.spacing(2),
-  },
-  checkBoxWrapper: {
-    padding: theme.spacing(1),
-    order: 3,
+  checkboxesWrapper: {
+    width: "218px",
     [theme.breakpoints.up("sm")]: {
-      order: "unset",
-      paddingTop: 0,
-      paddingBottom: 0,
+      width: "initial",
     },
   },
-  submitBtnWrapper: {
-    order: 4,
-    padding: "8px 0 16px 0",
+  inputsContainer: {
+    flexDirection: "column",
     [theme.breakpoints.up("sm")]: {
-      order: "unset",
+      flexDirection: "row",
+    },
+  },
+  checkboxLabel: {
+    fontSize: "0.8rem",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1rem",
+    },
+  },
+  errorsWrapper: {
+    textAlign: "center",
+    order: 5,
+    [theme.breakpoints.up("sm")]: {
+      textAlign: "initial",
+      order: "initial",
     },
   },
   submitBtn: {
-    background: theme.palette.primary.dark,
+    background: theme.palette.primary.main,
   },
 }));
