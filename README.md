@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## For correct word requirde server - https://github.com/SomeImya/server-for-react-weather-app
 
-## Live Demo - https://someimya.github.io/react-weather/
+## Live Demo - https://somebelaf.github.io/react-weather/
 
 
 ## Available Scripts
