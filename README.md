@@ -2,9 +2,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Work in progress!
 
-## For correct word requirde server - https://github.com/SomeBelaf/server-for-react-weather-app
+## For correct word requirde server - https://github.com/Username4212/server-for-react-weather-app
 
-## Live Demo - https://somebelaf.github.io/react-weather/
+## Live Demo - https://username4212.github.io/react-weather/
 
 
 ## Available Scripts
